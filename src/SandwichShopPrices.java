@@ -4,9 +4,8 @@ public class SandwichShopPrices {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Step 1: Prompt user for sandwich size
-        System.out.println("Welcome to SandwichShop!");
-        System.out.print("Enter sandwich size (1 = Regular $5.45, 2 = Large $8.95): ");
+        // Get sandwich size
+        System.out.print("Enter sandwich size (1 = Regular, 2 = Large): ");
         int size = scanner.nextInt();
 
         double basePrice;
@@ -15,23 +14,38 @@ public class SandwichShopPrices {
         } else if (size == 2) {
             basePrice = 8.95;
         } else {
-            System.out.println("Invalid sandwich size selected.");
+            System.out.println("Invalid size selected.");
             return;
         }
 
-        // Step 2: Prompt user for their age
+        // Ask about loaded option
+        System.out.print("Would you like it loaded? (yes/no): ");
+        scanner.nextLine(); // eat leftover newline
+        String loadedResponse = scanner.nextLine().toLowerCase();
+
+        if (loadedResponse.equals("yes")) {
+            if (size == 1) {
+                basePrice += 1.00;
+            } else {
+                basePrice += 1.75;
+            }
+        }
+
+        // Get age
         System.out.print("Enter your age: ");
         int age = scanner.nextInt();
 
+        // Calculate discount
         double discount = 0.0;
         if (age <= 17) {
-            discount = 0.10; // 10% discount
+            discount = 0.10;
         } else if (age >= 65) {
-            discount = 0.20; // 20% discount
+            discount = 0.20;
         }
 
-        // Step 3: Calculate and display final cost
-        double finalPrice = basePrice - (basePrice * discount);
-        System.out.printf("The cost of your sandwich is: $%.2f\n", finalPrice);
+        // Apply discount and show final price
+        double finalPrice = basePrice * (1 - discount);
+        System.out.printf("The final cost of your sandwich is $%.2f\n", finalPrice);
     }
 }
+
